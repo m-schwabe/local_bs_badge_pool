@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/bs_badge_pool/db" VERSION="20150621" COMMENT="XMLDB file for Moodle local/bs_badge_pool"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="local_badge_pool_badges" COMMENT="Stores information for pool badges">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" NEXT="description" PREVIOUS="id"/>
+        <FIELD NAME="description" TYPE="text" NOTNULL="false" SEQUENCE="false" NEXT="categoryid" PREVIOUS="name"/>
+        <FIELD NAME="categoryid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" NEXT="issuername" PREVIOUS="description"/>
+        <FIELD NAME="issuername" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" NEXT="issuerurl" PREVIOUS="categoryid"/>
+        <FIELD NAME="issuerurl" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" NEXT="issuercontact" PREVIOUS="issuername"/>
+		<FIELD NAME="issuercontact" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" NEXT="expiredate" PREVIOUS="issuerurl"/>
+		<FIELD NAME="expiredate" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" NEXT="expireperiod" PREVIOUS="issuercontact"/>
+		<FIELD NAME="expireperiod" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" NEXT="type" PREVIOUS="expiredate"/>
+		<FIELD NAME="type" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="2" SEQUENCE="false" NEXT="message" PREVIOUS="expireperiod"/>
+		<FIELD NAME="message" TYPE="text" NOTNULL="true" SEQUENCE="false" NEXT="messagesubject" PREVIOUS="type"/>
+        <FIELD NAME="messagesubject" TYPE="text" NOTNULL="true" SEQUENCE="false" NEXT="attachment" PREVIOUS="message"/>
+		<FIELD NAME="attachment" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false" NEXT="notification" PREVIOUS="messagesubject"/>
+		<FIELD NAME="notification" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false" NEXT="status" PREVIOUS="attachment"/>
+		<FIELD NAME="status" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="notification"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+	<TABLE NAME="local_badge_pool_categories" COMMENT="Stores categories for pool badges">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" NEXT="description" PREVIOUS="id"/>
+        <FIELD NAME="description" TYPE="text" NOTNULL="false" SEQUENCE="false" PREVIOUS="name"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
