@@ -47,9 +47,10 @@ $PAGE->navbar->add(get_string('pluginname', 'local_bs_badge_pool'));
 
 if ($usebadge) {
 
+    require_sesskey();
     require_once($CFG->libdir. '/gdlib.php');
 
-    $poolbadge = $DB->get_record('local_badge_pool_badges', array('id' => $usebadge), '*', MUST_EXIST);
+    $poolbadge = $DB->get_record('local_bs_badge_pool_badges', array('id' => $usebadge), '*', MUST_EXIST);
 
     // Additional fields for creating badge.
     $poolbadge->timecreated = time();
@@ -61,18 +62,14 @@ if ($usebadge) {
 
     $newbadgeid = $DB->insert_record('badge', $poolbadge, true);
     $newbadge = new badge($newbadgeid);
-    $cccc = $newbadge->get_context();
 
-    $a = file_encode_url($CFG->wwwroot.'/pluginfile.php', '/1/local_bs_badge_pool/badgepool/'.$usebadge.'/f3.png');
+    $fs = get_file_storage();
+    if ($file = $fs->get_file(SYSCONTEXTID, 'local_bs_badge_pool', 'badgepool', $usebadge, '/', 'f3.png')) {
+        if ($imagefile = $file->copy_content_to_temp()) {
+            badges_process_badge_image($newbadge, $imagefile);
+        }
+    }
 
-    $iconfile = $CFG->dataroot.'\temp\files\badgeicon_'.time().'.tmp';
-    $b = fopen($iconfile, 'x');
-    fwrite($b, file_get_contents($a));
-    fclose($b);
-
-    $imageurl = moodle_url::make_pluginfile_url($cccc->id, 'local_bs_badge_pool', 'badgepool', $usebadge, '/', 'f3.png', false);
-
-    badges_process_badge_image($newbadge, $iconfile);
     // If a user can configure badge criteria, they will be redirected to the criteria page.
     if (has_capability('moodle/badges:configurecriteria', $PAGE->context)) {
         redirect(new moodle_url('/badges/criteria.php', array('id' => $newbadgeid)));
@@ -82,7 +79,7 @@ if ($usebadge) {
 
 echo $OUTPUT->header();
 
-if (!$categories = $DB->get_records('local_badge_pool_categories')) {
+if (!$categories = $DB->get_records('local_bs_badge_pool_cat')) {
     echo $OUTPUT->box(get_string('nobadges', 'local_bs_badge_pool'), 'generalbox');
     echo $OUTPUT->footer();
     die;
@@ -93,7 +90,7 @@ $options = array();
 
 foreach ($categories as $category) {
     // Do not show empty categories.
-    if ($count = $DB->count_records('local_badge_pool_badges', array('categoryid' => $category->id, 'status' => 1))) {
+    if ($count = $DB->count_records('local_bs_badge_pool_badges', array('categoryid' => $category->id, 'status' => 1))) {
         $options[$category->id] = $category->name.' ('.$count.')';
     }
 }
@@ -107,9 +104,9 @@ if ($categoryid) {
     $perpage = 12;
     $start = $page == 0 ? 0 : $page * $perpage;
 
-    $badges = $DB->get_recordset('local_badge_pool_badges', array('categoryid' => $categoryid, 'status' => 1),
+    $badges = $DB->get_recordset('local_bs_badge_pool_badges', array('categoryid' => $categoryid, 'status' => 1),
         '', '*', $start, $perpage);
-    $badgescount = $DB->count_records('local_badge_pool_badges', array('categoryid' => $categoryid, 'status' => 1));
+    $badgescount = $DB->count_records('local_bs_badge_pool_badges', array('categoryid' => $categoryid, 'status' => 1));
 
     // True = links for prev, next, first & last page.
     $paging = new paging_bar($badgescount, $page, $perpage, $PAGE->url, 'page', true, true, true, true);
@@ -135,7 +132,7 @@ if ($categoryid) {
             array('id' => $badge->id, 'cid' => $courseid, 'cat' => $badge->categoryid)), $linktext);
         $description = html_writer::div($badge->description, 'description');
         $action = html_writer::link(new moodle_url('/local/bs_badge_pool/index.php',
-            array('id' => $courseid, 'use' => $badge->id)), get_string('usebadge', 'local_bs_badge_pool'));
+            array('id' => $courseid, 'use' => $badge->id, 'sesskey' => sesskey())), get_string('usebadge', 'local_bs_badge_pool'));
         $row = array($name, $description, $action);
         $table->data[] = $row;
     }

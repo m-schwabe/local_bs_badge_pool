@@ -4,7 +4,7 @@
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="local_badge_pool_badges" COMMENT="Stores information for pool badges">
+    <TABLE NAME="local_bs_badge_pool_badges" COMMENT="Stores information for pool badges">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="name"/>
         <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" NEXT="description" PREVIOUS="id"/>
@@ -26,7 +26,7 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
-	<TABLE NAME="local_badge_pool_categories" COMMENT="Stores categories for pool badges">
+	<TABLE NAME="local_bs_badge_pool_cat" COMMENT="Stores categories for pool badges">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="name"/>
         <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" NEXT="description" PREVIOUS="id"/>

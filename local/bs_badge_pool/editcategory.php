@@ -34,7 +34,7 @@ require_capability('local/bs_badge_pool:managecategories', $context);
 $pageparams = array();
 admin_externalpage_setup('local_bs_badge_pool_cat', '', $pageparams);
 
-$category = $DB->get_record('local_badge_pool_categories', array('id' => $categoryid));
+$category = $DB->get_record('local_bs_badge_pool_cat', array('id' => $categoryid));
 
 $form = new local_bs_badge_pool_category_form(new moodle_url('/local/bs_badge_pool/editcategory.php', array('id' => $categoryid)),
     array('category' => $category, 'action' => 'edit'));
@@ -49,7 +49,7 @@ if ($form->is_cancelled()) {
     $category->name = $data->name;
     $category->description = $data->description;
 
-    $DB->update_record('local_badge_pool_categories', $category);
+    $DB->update_record('local_bs_badge_pool_cat', $category);
 
     redirect(new moodle_url('/local/bs_badge_pool/managecat.php'));
 }

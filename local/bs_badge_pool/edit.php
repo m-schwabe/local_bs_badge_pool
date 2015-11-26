@@ -34,7 +34,7 @@ require_capability('local/bs_badge_pool:managebadgepool', $context);
 $pageparams = array();
 admin_externalpage_setup('local_bs_badge_pool', '', $pageparams);
 
-$badge = $DB->get_record('local_badge_pool_badges', array('id' => $badgeid));
+$badge = $DB->get_record('local_bs_badge_pool_badges', array('id' => $badgeid));
 $badge->message = clean_text($badge->message, FORMAT_HTML);
 $editoroptions = array(
     'subdirs' => 0,
@@ -75,17 +75,12 @@ if ($form->is_cancelled()) {
     // Need to unset message_editor options to avoid errors on form edit.
     unset($badge->message_editor);
 
-    $DB->update_record('local_badge_pool_badges', $poolbadge);
+    $DB->update_record('local_bs_badge_pool_badges', $poolbadge);
 
     if (!empty($CFG->gdversion)) {
         $badgeimage = $form->save_temp_file('image');
         process_new_icon(context_system::instance(), 'local_bs_badge_pool', 'badgepool', $badgeid, $badgeimage, true);
-        //@unlink($badgeimage);
-
-        // Clean up file draft area after badge image has been saved.
-        //$context = context_user::instance($USER->id, MUST_EXIST);
-        //$fs = get_file_storage();
-        //$fs->delete_area_files($context->id, 'user', 'draft');
+        @unlink($badgeimage);
     }
 
     redirect(new moodle_url('/local/bs_badge_pool/manage.php'));
@@ -93,7 +88,7 @@ if ($form->is_cancelled()) {
 
 echo $OUTPUT->header();
 
-if ($DB->get_records('local_badge_pool_categories')) {
+if ($DB->get_records('local_bs_badge_pool_cat')) {
     $form->display();
 } else {
     echo $OUTPUT->box(get_string('nocategories', 'local_bs_badge_pool'), 'generalbox');

@@ -82,15 +82,15 @@ if ($export === 1) {
 
     $table->colclasses = array('select', 'name');
 
-    $sql =  "SELECT id, name
-			   FROM {local_badge_pool_categories}
-		   ORDER BY ".$sort." ".$dir;
+    $sql = "SELECT id, name
+			  FROM {local_bs_badge_pool_cat}
+		  ORDER BY ".$sort." ".$dir;
 
     $categories = $DB->get_records_sql($sql);
 
     echo '<form action="export.php?export=1" method="post">';
     foreach ($categories as $category) {
-        $badgescount = $DB->count_records('local_badge_pool_badges', array('categoryid' => $category->id));
+        $badgescount = $DB->count_records('local_bs_badge_pool_badges', array('categoryid' => $category->id));
         $checkbox = '';
         if ($badgescount) {
             $checkbox = '<input type="checkbox" name="cids[]" value="'.$category->id.'">';
@@ -123,9 +123,9 @@ if ($export === 2) {
 
     $table->colclasses = array('select', 'name', 'category');
 
-    $sql =  "SELECT *
-			   FROM {local_badge_pool_badges}
-		   ORDER BY ".$sort." ".$dir;
+    $sql = "SELECT *
+			  FROM {local_bs_badge_pool_badges}
+		  ORDER BY ".$sort." ".$dir;
 
     $badges = $DB->get_records_sql($sql);
 
@@ -136,7 +136,7 @@ if ($export === 2) {
         html_writer::start_tag('span').$badge->name.html_writer::end_tag('span');
         $name = html_writer::link(new moodle_url('/local/bs_badge_pool/viewbadge.php',
             array('id' => $badge->id)), $linktext, null);
-        $badgecategory = $DB->get_field('local_badge_pool_categories', 'name', array('id' => $badge->categoryid));
+        $badgecategory = $DB->get_field('local_bs_badge_pool_cat', 'name', array('id' => $badge->categoryid));
         $category = html_writer::div($badgecategory, 'category');
         $row = array($checkbox, $name, $category);
         $table->data[] = $row;

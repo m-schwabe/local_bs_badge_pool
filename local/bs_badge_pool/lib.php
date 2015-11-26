@@ -80,7 +80,7 @@ class local_bs_badge_pool_badge_form extends moodleform {
         $mform->addRule('description', null, 'required');
 
         $options = array();
-        $categories = $DB->get_records('local_badge_pool_categories');
+        $categories = $DB->get_records('local_bs_badge_pool_cat');
         foreach ($categories as $category) {
             $options[$category->id] = $category->name;
         }
@@ -290,12 +290,12 @@ class local_bs_badge_pool_category_form extends moodleform {
 
 function local_bs_badge_pool_delete_badge($badgeid) {
     global $DB;
-    $DB->delete_records('local_badge_pool_badges', array('id' => $badgeid));
+    $DB->delete_records('local_bs_badge_pool_badges', array('id' => $badgeid));
 }
 
 function local_bs_badge_pool_delete_category($catid) {
     global $DB;
-    $DB->delete_records('local_badge_pool_categories', array('id' => $catid));
+    $DB->delete_records('local_bs_badge_pool_cat', array('id' => $catid));
 }
 
 function local_bs_badge_pool_print_badge_image($badge, $context, $filename = 'f2.png') {
@@ -358,8 +358,7 @@ function local_bs_badge_pool_print_badge_table_actions($badge, $context, $output
     $actions .= $output->action_icon($url, new pix_icon('t/edit', get_string('edit'))) . " ";
 
     // Delete badge.
-    $url = new moodle_url('/local/bs_badge_pool/manage.php', array('delete' => $badge->id));
-    $url->param('delete', $badge->id);
+    $url = new moodle_url('/local/bs_badge_pool/manage.php', array('delete' => $badge->id, 'sesskey' => sesskey()));
     $actions .= $output->action_icon($url, new pix_icon('t/delete', get_string('delete'))) . " ";
 
     return $actions;
@@ -376,8 +375,7 @@ function local_bs_badge_pool_print_category_table_actions($category, $context, $
     $actions .= $output->action_icon($url, new pix_icon('t/edit', get_string('edit'))) . " ";
 
     // Delete category.
-    $url = new moodle_url('/local/bs_badge_pool/managecat.php', array('delete' => $category->id));
-    $url->param('delete', $category->id);
+    $url = new moodle_url('/local/bs_badge_pool/managecat.php', array('delete' => $category->id, 'sesskey' => sesskey()));
     $actions .= $output->action_icon($url, new pix_icon('t/delete', get_string('delete'))) . " ";
 
     return $actions;
@@ -386,10 +384,10 @@ function local_bs_badge_pool_print_category_table_actions($category, $context, $
 function local_bs_badge_pool_set_badge_status($badgeid, $status) {
     global $DB;
 
-    $badge = $DB->get_record('local_badge_pool_badges', array('id' => $badgeid), '*', MUST_EXIST);
+    $badge = $DB->get_record('local_bs_badge_pool_badges', array('id' => $badgeid), '*', MUST_EXIST);
     $newstatus = $status == 'lock' ? 0 : 1;
     $badge->status = $newstatus;
-    $DB->update_record('local_badge_pool_badges', $badge);
+    $DB->update_record('local_bs_badge_pool_badges', $badge);
 }
 
 function local_bs_badge_pool_pluginfile($course, $birecord_or_cm, $context, $filearea, $args, $forcedownload,
@@ -438,7 +436,7 @@ function local_bs_badge_pool_view_badge($badge, $context, $output) {
 
     // Badge details.
     $display .= $output->heading(get_string('badgedetails', 'badges'), 3);
-    $category = $DB->get_field('local_badge_pool_categories', 'name', array('id' => $badge->categoryid));
+    $category = $DB->get_field('local_bs_badge_pool_cat', 'name', array('id' => $badge->categoryid));
     $dl = array();
     $dl[get_string('category')] = $category;
     $dl[get_string('description', 'badges')] = $badge->description;
@@ -506,11 +504,7 @@ class local_bs_badge_pool_import_form extends moodleform {
 
         $mform->addElement('filepicker', 'xmlfile', get_string('xmlfile', 'local_bs_badge_pool'));
 
-        //$options = core_text::get_encodings();
-        //$mform->addElement('select', 'encoding', get_string('importfileencoding', 'local_bs_badge_pool'), $options);
-        //$mform->setDefault('encoding', 'UTF-8');
-
-        $categories = $DB->get_records('local_badge_pool_categories', null, 'name', 'id,name');
+        $categories = $DB->get_records('local_bs_badge_pool_cat', null, 'name', 'id,name');
         $options = array('0' => get_string('keepcategories', 'local_bs_badge_pool'));
         foreach ($categories as $cat) {
             $options[$cat->id] = $cat->name;
@@ -537,8 +531,8 @@ function local_bs_badge_pool_build_xml($ids, $mode) {
                        c.id AS catid,
                        c.name AS catname,
                        c.description AS catdesc
-                  FROM {local_badge_pool_categories} AS c
-            INNER JOIN {local_badge_pool_badges} AS b ON c.id = b.categoryid
+                  FROM {local_bs_badge_pool_cat} AS c
+            INNER JOIN {local_bs_badge_pool_badges} AS b ON c.id = b.categoryid
                  WHERE c.id IN (".$list.")
               ORDER BY catid DESC";
     }
@@ -549,8 +543,8 @@ function local_bs_badge_pool_build_xml($ids, $mode) {
                        c.id AS catid,
                        c.name AS catname,
                        c.description AS catdesc
-                  FROM {local_badge_pool_badges} AS b
-            INNER JOIN {local_badge_pool_categories} AS c ON b.categoryid = c.id
+                  FROM {local_bs_badge_pool_badges} AS b
+            INNER JOIN {local_bs_badge_pool_cat} AS c ON b.categoryid = c.id
                  WHERE b.id IN (".$list.")
               ORDER BY b.categoryid DESC";
     }

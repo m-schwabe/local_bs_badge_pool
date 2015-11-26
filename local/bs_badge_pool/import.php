@@ -81,7 +81,7 @@ if (!$data = $form->get_data()) {
                 $newcategory->name = (string)$category['name'];
                 $newcategory->description = (string)$category->catdescription;
 
-                $categoryid = $DB->insert_record('local_badge_pool_categories', $newcategory, true);
+                $categoryid = $DB->insert_record('local_bs_badge_pool_cat', $newcategory, true);
                 $categoriesadded++;
 
             } else {
@@ -106,7 +106,7 @@ if (!$data = $form->get_data()) {
                 $newbadge->notification = (int)$badge->notification;
                 $newbadge->status = 1;
 
-                $badgepoolid = $DB->insert_record('local_badge_pool_badges', $newbadge, true);
+                $badgepoolid = $DB->insert_record('local_bs_badge_pool_badges', $newbadge, true);
 
                 $tempfile = tempnam($CFG->tempdir.'/badgepool/', 'img');
                 if (!$fp = fopen($tempfile, 'w+b')) {
@@ -118,7 +118,7 @@ if (!$data = $form->get_data()) {
                 @unlink($tempfile);
 
                 $badgesadded++;
-                $categoryname = $DB->get_field('local_badge_pool_categories', 'name', array('id' => $categoryid), MUST_EXIST);
+                $categoryname = $DB->get_field('local_bs_badge_pool_cat', 'name', array('id' => $categoryid), MUST_EXIST);
                 $params = array('badge' => $newbadge->name,
                                 'category' => $categoryname,
                                 'id' => $badgepoolid);

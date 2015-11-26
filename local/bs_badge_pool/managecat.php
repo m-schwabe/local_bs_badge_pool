@@ -40,6 +40,7 @@ $siteurl = new moodle_url('/local/bs_badge_pool/managecat.php', $pageparams);
 $PAGE->set_url($siteurl);
 
 if ($confirm and $delete) {
+    require_sesskey();
     local_bs_badge_pool_delete_category($delete);
     redirect($PAGE->url);
 }
@@ -49,11 +50,11 @@ echo $output->header();
 
 if ($delete) {
 
-    $catname = $DB->get_field('local_badge_pool_categories', 'name', array('id' => $delete));
+    $catname = $DB->get_field('local_bs_badge_pool_cat', 'name', array('id' => $delete));
     echo $output->heading(get_string('deletecategory', 'local_bs_badge_pool', $catname));
 
     // Make sure no pool badge uses this category.
-    if ($count = $DB->count_records('local_badge_pool_badges', array('categoryid' => $delete))) {
+    if ($count = $DB->count_records('local_bs_badge_pool_badges', array('categoryid' => $delete))) {
         echo $output->box(get_string('categorynotempty', 'local_bs_badge_pool', $count), 'generalbox');
 
     } else {
@@ -73,12 +74,12 @@ if ($delete) {
     $start = $page == 0 ? 0 : $page * $perpage;
 
     // Get pool badge categories in right sort order.
-    $sql =  "SELECT *
-               FROM {local_badge_pool_categories}
-           ORDER BY name ".$dir;
+    $sql = "SELECT *
+              FROM {local_bs_badge_pool_cat}
+          ORDER BY name ".$dir;
 
     $categories = $DB->get_recordset_sql($sql, null, $start, $perpage);
-    $badgescount = $DB->count_records('local_badge_pool_categories');
+    $badgescount = $DB->count_records('local_bs_badge_pool_cat');
 
     // True = links for prev, next, first & last page.
     $paging = new paging_bar($badgescount, $page, $perpage, $PAGE->url, 'page', true, true, true, true);

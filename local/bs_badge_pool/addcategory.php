@@ -42,7 +42,7 @@ if ($form->is_cancelled()) {
     $category->name = $data->name;
     $category->description = $data->description;
 
-    $categoryid = $DB->insert_record('local_badge_pool_categories', $category, true);
+    $categoryid = $DB->insert_record('local_bs_badge_pool_cat', $category, true);
 
     redirect(new moodle_url('/local/bs_badge_pool/managecat.php', array('id' => $categoryid)));
 }

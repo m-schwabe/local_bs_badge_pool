@@ -54,7 +54,7 @@ if ($form->is_cancelled()) {
     $poolbadge->notification = $data->notification;
     $poolbadge->status = 1;
 
-    $badgepoolid = $DB->insert_record('local_badge_pool_badges', $poolbadge, true);
+    $badgepoolid = $DB->insert_record('local_bs_badge_pool_badges', $poolbadge, true);
 
     if (!empty($CFG->gdversion)) {
         $badgeimage = $form->save_temp_file('image');
@@ -72,7 +72,7 @@ if ($form->is_cancelled()) {
 
 echo $OUTPUT->header();
 
-if ($DB->get_records('local_badge_pool_categories')) {
+if ($DB->get_records('local_bs_badge_pool_cat')) {
     $form->display();
 } else {
     echo $OUTPUT->box(get_string('nocategories', 'local_bs_badge_pool'), 'generalbox');

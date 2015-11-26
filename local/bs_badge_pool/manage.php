@@ -43,6 +43,7 @@ $siteurl = new moodle_url('/local/bs_badge_pool/manage.php', $pageparams);
 $PAGE->set_url($siteurl);
 
 if ($confirm and $delete) {
+    require_sesskey();
     local_bs_badge_pool_delete_badge($delete);
     redirect($PAGE->url);
 }
@@ -53,7 +54,7 @@ echo $output->header();
 if ($delete) {
 
     $PAGE->url->param('delete', $delete);
-    $badgename = $DB->get_field('local_badge_pool_badges', 'name', array('id' => $delete));
+    $badgename = $DB->get_field('local_bs_badge_pool_badges', 'name', array('id' => $delete));
     echo $output->heading(get_string('deletebadge', 'local_bs_badge_pool', $badgename));
     $deletebutton = $output->single_button(
     new moodle_url($PAGE->url, array('delete' => $delete, 'confirm' => 1)),
@@ -76,12 +77,12 @@ $perpage = 12;
 $start = $page == 0 ? 0 : $page * $perpage;
 
 // Get pool badges in right sort order.
-$sql =  "SELECT *
-           FROM {local_badge_pool_badges}
-       ORDER BY ".$sort." ".$dir;
+$sql = "SELECT *
+          FROM {local_bs_badge_pool_badges}
+      ORDER BY ".$sort." ".$dir;
 
 $badges = $DB->get_recordset_sql($sql, null, $start, $perpage);
-$badgescount = $DB->count_records('local_badge_pool_badges');
+$badgescount = $DB->count_records('local_bs_badge_pool_badges');
 
 // True = links for prev, next, first & last page.
 $paging = new paging_bar($badgescount, $page, $perpage, $PAGE->url, 'page', true, true, true, true);
@@ -103,7 +104,7 @@ $table->colclasses = array('name', 'description', 'category', 'actions');
 
 foreach ($badges as $badge) {
 
-    $badgecategory = $DB->get_field('local_badge_pool_categories', 'name', array('id' => $badge->categoryid));
+    $badgecategory = $DB->get_field('local_bs_badge_pool_cat', 'name', array('id' => $badge->categoryid));
     $style = !$badge->status ? array('class' => 'dimmed') : array();
     $linktext = local_bs_badge_pool_print_badge_image($badge, $context). ' '.
         html_writer::start_tag('span').$badge->name.html_writer::end_tag('span');

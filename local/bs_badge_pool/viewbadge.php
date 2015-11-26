@@ -29,7 +29,7 @@ $badgeid = required_param('id', PARAM_INT);
 $courseid = optional_param('cid', 0, PARAM_INT);
 $categoryid = optional_param('cat', 0, PARAM_INT);
 
-$badge = $DB->get_record('local_badge_pool_badges', array('id' => $badgeid));
+$badge = $DB->get_record('local_bs_badge_pool_badges', array('id' => $badgeid));
 $pageparams = array('id' => $badgeid);
 
 if ($courseid) {
