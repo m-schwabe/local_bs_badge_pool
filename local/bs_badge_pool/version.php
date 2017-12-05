@@ -17,16 +17,15 @@
 /**
  * Version details.
  *
- * @package local_bs_badge_pool
- * @author Matthias Schwabe <mail@matthiasschwabe.de>
- * @copyright 2015 Matthias Schwabe
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @package    local_bs_badge_pool
+ * @copyright  2015 onwards Matthias Schwabe {@link http://matthiasschwa.be}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2015112600;             // The current plugin version (Date: YYYYMMDDXX)
+$plugin->version   = 2017120500;             // The current plugin version (Date: YYYYMMDDXX)
 $plugin->requires  = 2015050800;             // Requires this Moodle version (2.9).
 $plugin->component = 'local_bs_badge_pool';  // Full name of the plugin (used for diagnostics).
-$plugin->release   = '1.0 (2015112600)';
+$plugin->release   = '1.1 (2017120500)';
 $plugin->maturity  = MATURITY_STABLE;

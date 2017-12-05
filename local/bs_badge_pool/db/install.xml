@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="local/bs_badge_pool/db" VERSION="20150621" COMMENT="XMLDB file for Moodle local/bs_badge_pool"
+<XMLDB PATH="local/bs_badge_pool/db" VERSION="20171205" COMMENT="XMLDB file for Moodle local/bs_badge_pool"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
