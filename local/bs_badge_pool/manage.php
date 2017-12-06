@@ -37,7 +37,7 @@ $context = context_system::instance();
 require_capability('local/bs_badge_pool:managebadgepool', $context);
 
 $pageparams = array();
-admin_externalpage_setup('local_bs_badge_pool', '', $pageparams);
+admin_externalpage_setup('local_bs_badge_pool_manage', '', $pageparams);
 $siteurl = new moodle_url('/local/bs_badge_pool/manage.php', $pageparams);
 $PAGE->set_url($siteurl);
 

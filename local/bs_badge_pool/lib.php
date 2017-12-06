@@ -32,14 +32,25 @@ require_once($CFG->libdir.'/filestorage/file_storage.php');
 require_once($CFG->libdir.'/adminlib.php');
 require_once($CFG->libdir.'/gdlib.php');
 
-// Show link to badge pool.
+// Show link to badge pool in course.
 function local_bs_badge_pool_extend_settings_navigation (navigation_node $coursenode, $context) {
-    global $PAGE, $CFG;
+    global $CFG, $DB, $PAGE;
+
+	// Check if badge pool is enabled for this course.
+	$enabled = false;
+	if ($PAGE->course->category) {
+		$catpath = $DB->get_field('course_categories', 'path', array('id' => $PAGE->course->category), MUST_EXIST);
+		$topcat = explode('/', $catpath)[1];
+		// Not using get_config because of dynamic plugin configuration.
+		$enabled = $DB->get_field('config_plugins', 'value',
+			array('plugin' => 'local_bs_badge_pool', 'name' => 'enable_category_'.$topcat), IGNORE_MISSING);
+	}
 
     if ($PAGE->course->id
         and $PAGE->course->id != SITEID
         and has_capability('local/bs_badge_pool:usebadgepool', $PAGE->context)
-        and $CFG->badges_allowcoursebadges) {
+        and $CFG->badges_allowcoursebadges
+		and $enabled) {
 
         $url = new moodle_url('/local/bs_badge_pool/index.php', array('id' => $PAGE->course->id));
         $coursenode->get('courseadmin')->get('coursebadges')->add(get_string('pluginname', 'local_bs_badge_pool'), $url,
