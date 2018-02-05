@@ -81,15 +81,15 @@ echo $OUTPUT->header();
 // Check if badge pool is enabled for this course.
 $enabled = false;
 if ($PAGE->course->category) {
-	$catpath = $DB->get_field('course_categories', 'path', array('id' => $PAGE->course->category), MUST_EXIST);
-	$topcat = explode('/', $catpath)[1];
-	// Not using get_config because of dynamic plugin configuration.
-	$enabled = $DB->get_field('config_plugins', 'value',
-		array('plugin' => 'local_bs_badge_pool', 'name' => 'enable_category_'.$topcat), IGNORE_MISSING);
+    $catpath = $DB->get_field('course_categories', 'path', array('id' => $PAGE->course->category), MUST_EXIST);
+    $topcat = explode('/', $catpath)[1];
+    // Not using get_config because of dynamic plugin configuration.
+    $enabled = $DB->get_field('config_plugins', 'value',
+        array('plugin' => 'local_bs_badge_pool', 'name' => 'enable_category_'.$topcat), IGNORE_MISSING);
 }
 if (!$enabled) {
-	echo $OUTPUT->notification(get_string('badgepool_disbaled', 'local_bs_badge_pool'), '');
-	echo $OUTPUT->footer();
+    echo $OUTPUT->notification(get_string('badgepool_disbaled', 'local_bs_badge_pool'), '');
+    echo $OUTPUT->footer();
     die;
 }
 

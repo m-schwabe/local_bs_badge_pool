@@ -26,7 +26,7 @@ defined('MOODLE_INTERNAL') || die;
 
 if (has_capability('local/bs_badge_pool:managebadgepool', context_system::instance())) {
 
-	// Badge Pool management.
+    // Badge Pool management.
     $ADMIN->add('badges', new admin_category('local_bs_badge_pool_manage_folder',
                 get_string('pluginname', 'local_bs_badge_pool')));
 
@@ -38,23 +38,23 @@ if (has_capability('local/bs_badge_pool:managebadgepool', context_system::instan
                 get_string('managecategories', 'local_bs_badge_pool'),
                 new moodle_url('/local/bs_badge_pool/managecat.php'), 'local/bs_badge_pool:managecategories'));
 
-	// Admin settings.
-	$ADMIN->add('localplugins', new admin_category('local_bs_badge_pool_admin_folder',
+    // Admin settings.
+    $ADMIN->add('localplugins', new admin_category('local_bs_badge_pool_admin_folder',
                 get_string('pluginname', 'local_bs_badge_pool')));
 
-	$settings = new admin_settingpage('local_bs_badge_pool', get_string('configuration', 'local_bs_badge_pool'));
+    $settings = new admin_settingpage('local_bs_badge_pool', get_string('configuration', 'local_bs_badge_pool'));
 
-	$settings->add(new admin_setting_heading('local_bs_badge_pool', '',
+    $settings->add(new admin_setting_heading('local_bs_badge_pool', '',
                    get_string('enable_categories_head', 'local_bs_badge_pool')));
 
-	$categories = $DB->get_records('course_categories', array('parent' => 0), null, 'id, name');
-	foreach ($categories as $category) {
-		$settings->add(new admin_setting_configcheckbox('local_bs_badge_pool/enable_category_'.$category->id,
+    $categories = $DB->get_records('course_categories', array('parent' => 0), null, 'id, name');
+    foreach ($categories as $category) {
+        $settings->add(new admin_setting_configcheckbox('local_bs_badge_pool/enable_category_'.$category->id,
                        $category->name, get_string('enable_category', 'local_bs_badge_pool'), 0));
-	}
+    }
 
-	$ADMIN->add('local_bs_badge_pool_admin_folder', $settings);
+    $ADMIN->add('local_bs_badge_pool_admin_folder', $settings);
 
-	$ADMIN->add('local_bs_badge_pool_admin_folder', new admin_externalpage('local_bs_badge_pool_about',
+    $ADMIN->add('local_bs_badge_pool_admin_folder', new admin_externalpage('local_bs_badge_pool_about',
                 get_string('about', 'local_bs_badge_pool'), new moodle_url('/local/bs_badge_pool/about.php')));
 }

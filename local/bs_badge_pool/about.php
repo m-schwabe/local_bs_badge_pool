@@ -41,19 +41,24 @@ echo $OUTPUT->header();
 $paypalhtml = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 	<input type="hidden" name="cmd" value="_s-xclick">
 	<input type="hidden" name="hosted_button_id" value="E35SWENXMYVGC">
-	<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+	<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit"
+        alt="PayPal - The safer, easier way to pay online!">
 	<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
 	</form>';
 
-$params = array('badgeenrol' => html_writer::link('https://moodle.org/plugins/enrol_badgeenrol', 'Badge Enrolment', array('target' => '_blank')),
-    'badgeladder' => html_writer::link('https://moodle.org/plugins/local_bs_badge_ladder', 'Badge Ladder', array('target' => '_blank')),
-    'recentbadges' => html_writer::link('https://moodle.org/plugins/block_bs_recent_badges', 'Recent Badges', array('target' => '_blank')));
+$params = array('badgeenrol' => html_writer::link('https://moodle.org/plugins/enrol_badgeenrol', 'Badge Enrolment',
+    array('target' => '_blank')),
+    'badgeladder' => html_writer::link('https://moodle.org/plugins/local_bs_badge_ladder', 'Badge Ladder',
+    array('target' => '_blank')),
+    'recentbadges' => html_writer::link('https://moodle.org/plugins/block_bs_recent_badges', 'Recent Badges',
+    array('target' => '_blank')));
 
 $paypalbox = html_writer::div($paypalhtml, 'donation-button');
 $abouttext = html_writer::div(get_string('abouttext', 'local_bs_badge_pool', $params), 'about-text');
 $donationtext = html_writer::div(get_string('donationtext', 'local_bs_badge_pool'), 'donation-text');
 
-$params = array('aboutlink' => html_writer::link('https://moodle.org/plugins/local_bs_badge_pool', get_string('plugindirectory', 'local_bs_badge_pool'), array('target' => '_blank')),
+$params = array('aboutlink' => html_writer::link('https://moodle.org/plugins/local_bs_badge_pool',
+    get_string('plugindirectory', 'local_bs_badge_pool'), array('target' => '_blank')),
     'aboutmail' => html_writer::link('mailto:moodle@matthiasschwa.be', 'moodle@matthiasschwa.be'));
 
 $aboutfeedback = html_writer::div(get_string('aboutfeedbacktext', 'local_bs_badge_pool', $params), 'aboutfeedback-text');
