@@ -34,7 +34,7 @@ $context = context_system::instance();
 require_capability('local/bs_badge_pool:managecategories', $context);
 
 $pageparams = array();
-admin_externalpage_setup('local_bs_badge_pool_cat', '', $pageparams);
+admin_externalpage_setup('local_bs_badge_pool_managecat', '', $pageparams);
 $siteurl = new moodle_url('/local/bs_badge_pool/managecat.php', $pageparams);
 $PAGE->set_url($siteurl);
 

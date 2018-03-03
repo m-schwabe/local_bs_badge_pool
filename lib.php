@@ -24,7 +24,6 @@
 
 // Some file imports.
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
-require_once($CFG->dirroot.'/config.php');
 require_once($CFG->libdir.'/formslib.php');
 require_once($CFG->libdir.'/badgeslib.php');
 require_once($CFG->libdir.'/filelib.php');

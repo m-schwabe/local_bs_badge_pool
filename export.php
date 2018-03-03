@@ -39,7 +39,7 @@ $pageparams = array();
 if ($export) {
     $pageparams['export'] = $export;
 }
-admin_externalpage_setup('local_bs_badge_pool', '', $pageparams);
+admin_externalpage_setup('local_bs_badge_pool_manage', '', $pageparams);
 $siteurl = new moodle_url('/local/bs_badge_pool/export.php', $pageparams);
 $PAGE->set_url($siteurl);
 $PAGE->navbar->add(get_string('export', 'local_bs_badge_pool'), new moodle_url('/local/bs_badge_pool/export.php'));

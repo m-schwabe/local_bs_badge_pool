@@ -31,7 +31,7 @@ require_login();
 require_capability('local/bs_badge_pool:managecategories', $context);
 
 $pageparams = array();
-admin_externalpage_setup('local_bs_badge_pool_cat', '', $pageparams);
+admin_externalpage_setup('local_bs_badge_pool_managecat', '', $pageparams);
 
 $category = $DB->get_record('local_bs_badge_pool_cat', array('id' => $categoryid));
 

@@ -28,7 +28,7 @@ require_login();
 require_capability('local/bs_badge_pool:managebadgepool', context_system::instance());
 
 $pageparams = array();
-admin_externalpage_setup('local_bs_badge_pool', '', $pageparams);
+admin_externalpage_setup('local_bs_badge_pool_manage', '', $pageparams);
 
 $form = new local_bs_badge_pool_badge_form(new moodle_url('/local/bs_badge_pool/addbadge.php'));
 

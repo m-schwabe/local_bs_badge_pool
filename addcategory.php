@@ -28,7 +28,7 @@ require_login();
 require_capability('local/bs_badge_pool:managecategories', context_system::instance());
 
 $pageparams = array();
-admin_externalpage_setup('local_bs_badge_pool_cat', '', $pageparams);
+admin_externalpage_setup('local_bs_badge_pool_managecat', '', $pageparams);
 
 $form = new local_bs_badge_pool_category_form(new moodle_url('/local/bs_badge_pool/addcategory.php'));
 

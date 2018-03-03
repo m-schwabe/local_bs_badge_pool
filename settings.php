@@ -34,7 +34,7 @@ if (has_capability('local/bs_badge_pool:managebadgepool', context_system::instan
                 get_string('manage', 'local_bs_badge_pool'),
                 new moodle_url('/local/bs_badge_pool/manage.php'), 'local/bs_badge_pool:managebadgepool'));
 
-    $ADMIN->add('local_bs_badge_pool_manage_folder', new admin_externalpage('local_bs_badge_pool_cat',
+    $ADMIN->add('local_bs_badge_pool_manage_folder', new admin_externalpage('local_bs_badge_pool_managecat',
                 get_string('managecategories', 'local_bs_badge_pool'),
                 new moodle_url('/local/bs_badge_pool/managecat.php'), 'local/bs_badge_pool:managecategories'));
 
@@ -57,4 +57,6 @@ if (has_capability('local/bs_badge_pool:managebadgepool', context_system::instan
 
     $ADMIN->add('local_bs_badge_pool_admin_folder', new admin_externalpage('local_bs_badge_pool_about',
                 get_string('about', 'local_bs_badge_pool'), new moodle_url('/local/bs_badge_pool/about.php')));
+
+    $settings = null;
 }

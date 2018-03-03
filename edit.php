@@ -31,7 +31,7 @@ require_login();
 require_capability('local/bs_badge_pool:managebadgepool', $context);
 
 $pageparams = array();
-admin_externalpage_setup('local_bs_badge_pool', '', $pageparams);
+admin_externalpage_setup('local_bs_badge_pool_manage', '', $pageparams);
 
 $badge = $DB->get_record('local_bs_badge_pool_badges', array('id' => $badgeid));
 $badge->message = clean_text($badge->message, FORMAT_HTML);

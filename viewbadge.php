@@ -46,7 +46,7 @@ if ($courseid) {
     require_login();
     $context = context_system::instance();
     require_capability('local/bs_badge_pool:managebadgepool', $context);
-    admin_externalpage_setup('local_bs_badge_pool', '', $pageparams);
+    admin_externalpage_setup('local_bs_badge_pool_manage', '', $pageparams);
 }
 
 $siteurl = new moodle_url('/local/bs_badge_pool/viewbadge.php', $pageparams);
