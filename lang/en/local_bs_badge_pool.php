@@ -79,3 +79,4 @@ $string['configuration'] = 'Configuration';
 $string['enable_category'] = 'Enable badge pool for this category';
 $string['enable_categories_head'] = 'Select the course categories in which the badge pool should be available. You can only select top level categories. All sub categories will inherit this choice.';
 $string['badgepool_disbaled'] = 'Badge pool is disabled for this course category.';
+$string['privacy:metadata'] = 'The Badge Pool plugin does not store any personal data.';
